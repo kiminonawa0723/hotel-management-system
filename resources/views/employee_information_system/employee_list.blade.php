@@ -15,6 +15,8 @@
             </div>
         </div>
 
+            <a type="submit" class="btn btn-primary" href="/employee_information_system/verification">Verification</a>    
+
             <div class="dtr_Tables rounded p-2">
                 <table id="table" class="table table-hover table-primary table-striped text-center shadow-sm">
                     <thead>
@@ -34,22 +36,24 @@
                     @unless (count($Lists) == 0)
                     
                       @foreach ($Lists as $List)
-                        <tr>
-                          <td><a href="/employee_information_system/profile/{{$List->id}}" style="text-decoration: none; color: #000">{{$List->last_name}} {{$List->first_name}}</a></th>
-                          <td>{{$List->id}}</td>
-                          <td>{{$List->gender}}</td>
-                          <td>{{$List->address}}</td>
-                          <td>{{$List->birthday}}</td>
-                          <td>{{$List->email}}</td>
-                          <td>{{$List->contact_number}}</td>
-                          <td class="d-flex"><a href="/employee_information_system/edit/{{$List->id}}"><i class="fa-solid fa-pen-to-square text-primary pe-3"></i></a>
-                          <form action="/employee_information_system/delete/{{$List->id}}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" style="background: none; border: none;"><i class="fa-solid fa-trash text-danger"></i></button>
-                          </form>
-                          </td>
-                        </tr>
+                        @if ($List->deleted_at == null)
+                          <tr>
+                            <td><a href="/employee_information_system/profile/{{$List->id}}" style="text-decoration: none; color: #000">{{$List->last_name}} {{$List->first_name}}</a></th>
+                            <td>{{$List->id}}</td>
+                            <td>{{$List->gender}}</td>
+                            <td>{{$List->address}}</td>
+                            <td>{{$List->birthday}}</td>
+                            <td>{{$List->email}}</td>
+                            <td>{{$List->contact_number}}</td>
+                            <td class="d-flex"><a href="/employee_information_system/edit/{{$List->id}}"><i class="fa-solid fa-pen-to-square text-primary pe-3 fs-4 mt-1"></i></a>
+                            <form action="/employee_information_system/delete/{{$List->id}}" method="POST">
+                              @csrf
+                              @method('DELETE')
+                              <button type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="background: none; border: none;"><i class="fa-solid fa-trash text-danger fs-4"></i></button>
+                            </form>
+                            </td>
+                          </tr>
+                        @endif
                       @endforeach
                         
                     @else

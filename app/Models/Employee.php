@@ -38,6 +38,10 @@ class Employee extends Authenticatable
     }
 
     // relationships
+    public function account()
+    {
+        return $this->hasMany(Account::class, 'employee_id');
+    }
     public function reservations()
     {
         return $this->hasMany(Reservation::class, 'employee_id');
@@ -51,5 +55,19 @@ class Employee extends Authenticatable
     public function position()
     {
         return $this->belongsTo(Position::class, 'position_id');
+    }
+    public function roles()
+    {
+        return $this->hasMany(EmployeeRole::class, 'employee_id');
+    }
+
+    public function hasAnyRoles($roles)
+    {
+        return $this->roles->whereIn('role_id', $roles)->first();
+    }
+
+    public function hasAnyRole($role)
+    {
+        return $this->roles->whereIn('role_id', $role)->first();
     }
 }
